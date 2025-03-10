@@ -4,8 +4,6 @@ import com.pragma.powerup.domain.exception.*;
 import com.pragma.powerup.domain.model.User;
 
 import java.time.LocalDate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UserValidations {
 
@@ -13,57 +11,51 @@ public class UserValidations {
     public void validateOwner(User user) {
 
         validateFields(user);
-        validateAge(user.getBirthDate());
-        validateEmail(user.getEmail());
-        validateDocumentNumber(user.getDocumentNumber());
-        validateCellPhone(user.getCellPhone(), 13);
+        validateAge(user);
+        validateEmail(user);
+        validateDocumentNumber(user);
+        validateCellPhone(user);
     }
 
     public void validateEmployee(User user) {
         validateFields(user);
-        validateEmail(user.getEmail());
-        validateDocumentNumber(user.getDocumentNumber());
-        validateCellPhone(user.getCellPhone(), 13);
+        validateEmail(user);
+        validateDocumentNumber(user);
+        validateCellPhone(user);
     }
 
     public void validateClient(User user){
         validateFields(user);
-        validateEmail(user.getEmail());
-        validateDocumentNumber(user.getDocumentNumber());
-        validateCellPhone(user.getCellPhone(),13);
+        validateEmail(user);
+        validateDocumentNumber(user);
+        validateCellPhone(user);
 
     }
 
 
-    private void validateAge(LocalDate birthDate) {
-        if (birthDate.isAfter(LocalDate.now().minusYears(18))) {
+    private void validateAge(User user) {
+        if (user.getBirthDate().isAfter(LocalDate.now().minusYears(18))) {
             throw new InvalidOwnerAgeException();
         }
     }
 
-    private void validateEmail(String email) {
-        String regex = "^[A-Za-z0-9+_.-]+@(.+)$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        if (!matcher.matches()) {
+    private void validateEmail(User user) {
+
+        if (user.getEmail() == null || !user.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")){
             throw new InvalidEmailException();
         }
     }
 
-    private void validateDocumentNumber(String documentNumber) {
-        String regex = "^\\d{10}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(documentNumber);
-        if (!matcher.matches()) {
+    private void validateDocumentNumber(User user) {
+
+        if (user.getDocumentNumber() == null || !user.getDocumentNumber().matches("^\\d{10}$")){
             throw new InvalidDocumentNumberException();
         }
     }
 
-    private void validateCellPhone(String cellPhone, int maxLength) {
-        String regex = "^\\+?\\d{1," + (maxLength - 1) + "}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(cellPhone);
-        if (!matcher.matches()) {
+    private void validateCellPhone(User user) {
+
+        if (user.getCellPhone() == null || !user.getCellPhone().matches("^\\+?\\d{1," + (13 - 1) + "}$")){
             throw new InvalidCellPhoneException();
         }
     }
@@ -84,6 +76,9 @@ public class UserValidations {
             throw new InvalidUserFieldsException();
         }
         if (user.getEmail() == null || user.getEmail().isBlank()) {
+            throw new InvalidUserFieldsException();
+        }
+        if (user.getBirthDate() == null) {
             throw new InvalidUserFieldsException();
         }
     }

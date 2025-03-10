@@ -22,7 +22,7 @@ public class RoleEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "role")
     private List<UserEntity> userList;
 
 }

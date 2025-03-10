@@ -7,25 +7,28 @@ import com.pragma.powerup.application.mapper.IUserRequestMapper;
 import com.pragma.powerup.application.mapper.IUserResponseMapper;
 import com.pragma.powerup.domain.api.IUserServicePort;
 import com.pragma.powerup.domain.model.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserHandlerImpl implements IUserHandler {
 
     private final IUserServicePort userServicePort;
     private final IUserRequestMapper userRequestMapper;
     private final IUserResponseMapper userResponseMapper;
 
-    public UserHandlerImpl(IUserServicePort userServicePort, IUserRequestMapper userRequestMapper, IUserResponseMapper userResponseMapper) {
-        this.userServicePort = userServicePort;
-        this.userRequestMapper = userRequestMapper;
-        this.userResponseMapper = userResponseMapper;
+
+    @Override
+    public UserResponseDto userCreateOwner(UserRequestDto userRequestDto) {
+        User request = userRequestMapper.requestToUser(userRequestDto);
+        User response = userServicePort.createOwner(request);
+        return userResponseMapper.userToResponse(response);
     }
 
     @Override
-    public UserResponseDto userCreateUser(UserRequestDto userRequestDto) {
-        User request = userRequestMapper.requestToUser(userRequestDto);
-        User response = userServicePort.createUser(request);
-        return userResponseMapper.userToResponse(response);
+    public UserResponseDto userGetById(Long id){
+        User user = userServicePort.getUserById(id);
+        return userResponseMapper.userToResponse(user);
     }
 }

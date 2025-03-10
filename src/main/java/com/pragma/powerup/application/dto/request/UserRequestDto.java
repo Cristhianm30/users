@@ -1,7 +1,8 @@
 package com.pragma.powerup.application.dto.request;
 
 
-import com.pragma.powerup.domain.model.Role;
+import com.pragma.powerup.application.dto.response.RoleDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,6 @@ public class UserRequestDto {
     private LocalDate birthDate;
     private String email;
     private String password;
-    private Role role;
+    private RoleDto role;
 
 }

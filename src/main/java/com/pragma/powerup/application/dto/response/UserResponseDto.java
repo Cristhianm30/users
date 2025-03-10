@@ -1,6 +1,5 @@
 package com.pragma.powerup.application.dto.response;
 
-import com.pragma.powerup.domain.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,6 @@ public class UserResponseDto {
     private String cellPhone;
     private LocalDate birthDate;
     private String email;
-    private Role role;
+    private RoleDto role;
 
 }

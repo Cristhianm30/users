@@ -17,10 +17,17 @@ public class UserRestController {
         this.userHandler = userHandler;
     }
 
-    @PostMapping("/create/owner")
+    @PostMapping("/owner")
     public ResponseEntity<UserResponseDto> createOwner(@RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto createdUser = userHandler.userCreateUser(userRequestDto);
+        UserResponseDto createdUser = userHandler.userCreateOwner(userRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getUserById (@PathVariable Long id){
+        UserResponseDto user = userHandler.userGetById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(user);
+    }
+
 
 }

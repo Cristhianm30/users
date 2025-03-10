@@ -8,11 +8,15 @@ public enum ExceptionResponse {
 
     INVALID_AGE("El propietario deber tener minimo 18 años"),
 
-    INVALID_DOCUMENTNUMBER("Numero de documento"),
+    INVALID_DOCUMENTNUMBER("Numero de documento invalido"),
 
     INVALID_CELLPHONE("Numero de telefono incorrecto"),
 
-    INVALID_USER_FIELDS("Campos del usuario incorrectos");
+    INVALID_USER_FIELDS("Campos del usuario incorrectos"),
+
+    ROLE_NOT_FOUND("Rol de usuario no encontrado"),
+
+    USER_NOT_FOUND("usuario no encontrado");
 
     private final String message;
 
