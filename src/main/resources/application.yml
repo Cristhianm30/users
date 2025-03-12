@@ -11,5 +11,17 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+jwt:
+  secret: "5qaPrnb5CYNQqH3WkaNX6ZZZEBMbftqrhxyv0tPMk1Xwjq6kgHNehigwIabVg/JWZ3ekmkhH2QSnY406SdnPSA=="
+  expiration: 3600000
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        web: DEBUG
+
 appDescription: "Pragma Powerup"
 appVersion: "1.0.0"

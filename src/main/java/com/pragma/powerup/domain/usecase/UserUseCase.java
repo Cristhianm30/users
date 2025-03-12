@@ -34,8 +34,12 @@ public class UserUseCase  implements IUserServicePort {
 
     @Override
     public User getUserById (Long id){
-        return userPersistencePort.findById(id)
-                .orElseThrow(UserNotFoundException::new);
+        return userPersistencePort.findById(id);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userPersistencePort.getUserByEmail(email);
     }
 
 }

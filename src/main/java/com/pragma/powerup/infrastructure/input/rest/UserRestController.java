@@ -29,5 +29,11 @@ public class UserRestController {
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 
+    @GetMapping("/email")
+    public ResponseEntity<UserResponseDto> getUserByEmail(@RequestParam String email) {
+        UserResponseDto user = userHandler.getUserByEmail(email);
+        return ResponseEntity.ok(user);
+    }
+
 
 }

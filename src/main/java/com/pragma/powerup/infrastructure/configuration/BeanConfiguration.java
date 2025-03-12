@@ -21,9 +21,11 @@ import com.pragma.powerup.infrastructure.out.jpa.repository.IObjectRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IRoleRepository;
 import com.pragma.powerup.infrastructure.out.jpa.repository.IUserRepository;
 import com.pragma.powerup.infrastructure.security.BCryptPasswordEncoderAdapter;
+import com.pragma.powerup.infrastructure.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
@@ -84,6 +86,11 @@ public class BeanConfiguration {
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(IUserServicePort userServicePort) {
+        return new CustomUserDetailsService(userServicePort);
     }
 
 

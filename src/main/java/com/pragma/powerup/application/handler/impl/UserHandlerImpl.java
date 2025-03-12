@@ -31,4 +31,10 @@ public class UserHandlerImpl implements IUserHandler {
         User user = userServicePort.getUserById(id);
         return userResponseMapper.userToResponse(user);
     }
+
+    @Override
+    public UserResponseDto getUserByEmail(String email) {
+        User user = userServicePort.getUserByEmail(email);
+        return userResponseMapper.userToResponse(user);
+    }
 }
