@@ -2,7 +2,6 @@ package com.pragma.powerup.domain.usecase;
 
 import com.pragma.powerup.domain.api.IRoleServicePort;
 import com.pragma.powerup.domain.api.IUserServicePort;
-import com.pragma.powerup.domain.exception.UserNotFoundException;
 import com.pragma.powerup.domain.model.User;
 import com.pragma.powerup.domain.spi.IPasswordEncoder;
 import com.pragma.powerup.domain.spi.IUserPersistencePort;

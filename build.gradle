@@ -39,7 +39,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-web'
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
-	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+
 
 	implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
 	runtimeOnly "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
@@ -56,6 +56,13 @@ dependencies {
 
 	implementation "org.springdoc:springdoc-openapi-ui:${openApiVersion}"
 	implementation "org.springdoc:springdoc-openapi-webflux-ui:${openApiVersion}"
+
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+	testImplementation 'org.mockito:mockito-core:5.3.1'
+	testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+	testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+	testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
@@ -63,5 +70,10 @@ tasks.named('test') {
 }
 
 test {
+	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+		exceptionFormat "full"
+	}
 	finalizedBy jacocoTestReport
 }
