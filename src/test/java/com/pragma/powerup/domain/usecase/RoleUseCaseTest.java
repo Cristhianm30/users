@@ -25,10 +25,14 @@ public class RoleUseCaseTest {
     private RoleUseCase roleUseCase;
 
     private Role ownerRole;
+    private Role employeeRole;
+    private Role clientRole;
 
     @BeforeEach
     void setUp() {
         ownerRole = new Role(1L, "PROPIETARIO");
+        employeeRole = new Role(2L, "EMPLEADO");
+        clientRole = new Role(3L, "CLIENTE");
     }
 
     @Test
@@ -44,6 +48,25 @@ public class RoleUseCaseTest {
         assertNotNull(result);
         assertEquals("PROPIETARIO", result.getName());
     }
+
+    @Test
+    void testGetEmployeeRoleSuccessfully() {
+        when(rolePersistencePort.findByName("EMPLEADO")).thenReturn(Optional.of(employeeRole));
+        Role result = roleUseCase.getEmployeeRole();
+        verify(rolePersistencePort, times(1)).findByName("EMPLEADO");
+        assertNotNull(result);
+        assertEquals("EMPLEADO", result.getName());
+    }
+
+    @Test
+    void testGetClientRoleSuccessfully() {
+        when(rolePersistencePort.findByName("CLIENTE")).thenReturn(Optional.of(clientRole));
+        Role result = roleUseCase.getClientRole();
+        verify(rolePersistencePort, times(1)).findByName("CLIENTE");
+        assertNotNull(result);
+        assertEquals("CLIENTE", result.getName());
+    }
+
 
     @Test
     void testGetOwnerRoleThrowsExceptionWhenNotFound() {

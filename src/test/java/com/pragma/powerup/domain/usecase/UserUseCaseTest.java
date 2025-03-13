@@ -39,10 +39,14 @@ class UserUseCaseTest {
 
     private User dummyUser;
     private Role ownerRole;
+    private Role employeeRole;
+    private Role clientRole;
 
     @BeforeEach
     void setUp() {
         ownerRole = new Role(1L, "PROPIETARIO");
+        employeeRole = new Role(2L, "EMPLEADO");
+        clientRole = new Role(3L, "CLIENTE");
         // Se crea un usuario de ejemplo; el rol se asignará en el use case.
         dummyUser = new User(null, null, "plainPassword", LocalDate.of(1990, 1, 1),
                 "+123456789", "1234567890", "Doe", "John", "john.doe@example.com");
@@ -77,6 +81,53 @@ class UserUseCaseTest {
         assertEquals(ownerRole, result.getRole());
         assertEquals("encodedPassword", result.getPassword());
     }
+
+    @Test
+    void testCreateEmployeeSuccessfully() {
+        doNothing().when(userValidations).validateEmployee(dummyUser);
+        when(roleServicePort.getEmployeeRole()).thenReturn(employeeRole);
+        when(passwordEncoder.encode(dummyUser.getPassword())).thenReturn("encodedPassword");
+        User savedUser = new User(2L, employeeRole, "encodedPassword", dummyUser.getBirthDate(),
+                dummyUser.getCellPhone(), dummyUser.getDocumentNumber(),
+                dummyUser.getLastName(), dummyUser.getName(), dummyUser.getEmail());
+        when(userPersistencePort.save(dummyUser)).thenReturn(savedUser);
+
+        User result = userUseCase.createEmployee(dummyUser);
+
+        verify(userValidations, times(1)).validateEmployee(dummyUser);
+        verify(roleServicePort, times(1)).getEmployeeRole();
+        verify(passwordEncoder, times(1)).encode("plainPassword");
+        verify(userPersistencePort, times(1)).save(dummyUser);
+
+        assertNotNull(result);
+        assertEquals(2L, result.getId());
+        assertEquals(employeeRole, result.getRole());
+        assertEquals("encodedPassword", result.getPassword());
+    }
+
+    @Test
+    void testCreateClientSuccessfully() {
+        doNothing().when(userValidations).validateClient(dummyUser);
+        when(roleServicePort.getClientRole()).thenReturn(clientRole);
+        when(passwordEncoder.encode(dummyUser.getPassword())).thenReturn("encodedPassword");
+        User savedUser = new User(3L, clientRole, "encodedPassword", dummyUser.getBirthDate(),
+                dummyUser.getCellPhone(), dummyUser.getDocumentNumber(),
+                dummyUser.getLastName(), dummyUser.getName(), dummyUser.getEmail());
+        when(userPersistencePort.save(dummyUser)).thenReturn(savedUser);
+
+        User result = userUseCase.createClient(dummyUser);
+
+        verify(userValidations, times(1)).validateClient(dummyUser);
+        verify(roleServicePort, times(1)).getClientRole();
+        verify(passwordEncoder, times(1)).encode("plainPassword");
+        verify(userPersistencePort, times(1)).save(dummyUser);
+
+        assertNotNull(result);
+        assertEquals(3L, result.getId());
+        assertEquals(clientRole, result.getRole());
+        assertEquals("encodedPassword", result.getPassword());
+    }
+
 
     @Test
     void testGetUserById() {
