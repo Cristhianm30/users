@@ -8,4 +8,5 @@ public interface IUserServicePort {
     User getUserById(Long id);
     User getUserByEmail(String email);
     User createEmployee(User user);
+    User createClient(User user);
 }

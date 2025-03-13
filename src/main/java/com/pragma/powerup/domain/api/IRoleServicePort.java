@@ -6,4 +6,5 @@ public interface IRoleServicePort {
 
     Role getOwnerRole();
     Role getEmployeeRole();
+    Role getClientRole();
 }

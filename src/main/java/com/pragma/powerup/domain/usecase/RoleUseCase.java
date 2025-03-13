@@ -22,4 +22,10 @@ public class RoleUseCase implements IRoleServicePort {
         return rolePersistencePort.findByName("EMPLEADO")
                 .orElseThrow(RoleNotFoundException::new);
     }
+
+    @Override
+    public Role getClientRole() {
+        return rolePersistencePort.findByName("CLIENTE")
+                .orElseThrow(RoleNotFoundException::new);
+    }
 }

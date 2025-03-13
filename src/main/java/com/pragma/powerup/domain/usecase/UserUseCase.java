@@ -50,4 +50,13 @@ public class UserUseCase  implements IUserServicePort {
         return userPersistencePort.save(user);
     }
 
+    @Override
+    public User createClient(User user) {
+        userValidations.validateClient(user);
+        user.setRole(roleServicePort.getClientRole());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        return userPersistencePort.save(user);
+    }
+
 }
