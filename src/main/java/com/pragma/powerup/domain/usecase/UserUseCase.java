@@ -41,4 +41,13 @@ public class UserUseCase  implements IUserServicePort {
         return userPersistencePort.getUserByEmail(email);
     }
 
+    @Override
+    public User createEmployee(User user) {
+        userValidations.validateEmployee(user);
+        user.setRole(roleServicePort.getEmployeeRole());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        return userPersistencePort.save(user);
+    }
+
 }

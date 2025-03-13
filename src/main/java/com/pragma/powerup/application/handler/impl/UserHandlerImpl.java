@@ -37,4 +37,11 @@ public class UserHandlerImpl implements IUserHandler {
         User user = userServicePort.getUserByEmail(email);
         return userResponseMapper.userToResponse(user);
     }
+
+    @Override
+    public UserResponseDto userCreateEmployee(UserRequestDto userRequestDto){
+        User request = userRequestMapper.requestToUser(userRequestDto);
+        User response = userServicePort.createEmployee(request);
+        return userResponseMapper.userToResponse(response);
+    }
 }

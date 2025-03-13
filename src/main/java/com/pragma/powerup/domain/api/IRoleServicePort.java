@@ -4,5 +4,6 @@ import com.pragma.powerup.domain.model.Role;
 
 public interface IRoleServicePort {
 
-    public Role getOwnerRole();
+    Role getOwnerRole();
+    Role getEmployeeRole();
 }

@@ -34,6 +34,11 @@ public class UserValidations {
 
 
     private void validateAge(User user) {
+
+        if (user.getBirthDate() == null) {
+            throw new InvalidUserFieldsException();
+        }
+
         if (user.getBirthDate().isAfter(LocalDate.now().minusYears(18))) {
             throw new InvalidOwnerAgeException();
         }
@@ -76,9 +81,6 @@ public class UserValidations {
             throw new InvalidUserFieldsException();
         }
         if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new InvalidUserFieldsException();
-        }
-        if (user.getBirthDate() == null) {
             throw new InvalidUserFieldsException();
         }
     }

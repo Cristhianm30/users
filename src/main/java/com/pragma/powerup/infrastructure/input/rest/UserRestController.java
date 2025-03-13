@@ -35,5 +35,11 @@ public class UserRestController {
         return ResponseEntity.ok(user);
     }
 
+    @PostMapping("/employee")
+    public ResponseEntity<UserResponseDto> createEmployee(@RequestBody UserRequestDto userRequestDto){
+        UserResponseDto createdUser = userHandler.userCreateEmployee(userRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    }
+
 
 }

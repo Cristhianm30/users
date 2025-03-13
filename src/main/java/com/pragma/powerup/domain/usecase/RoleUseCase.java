@@ -17,4 +17,9 @@ public class RoleUseCase implements IRoleServicePort {
         return rolePersistencePort.findByName("PROPIETARIO")
                 .orElseThrow(RoleNotFoundException::new);
     }
+
+    public Role getEmployeeRole(){
+        return rolePersistencePort.findByName("EMPLEADO")
+                .orElseThrow(RoleNotFoundException::new);
+    }
 }

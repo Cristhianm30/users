@@ -9,4 +9,5 @@ public interface IUserHandler {
     UserResponseDto userCreateOwner(UserRequestDto userRequestDto);
     UserResponseDto userGetById (Long id);
     UserResponseDto getUserByEmail( String email);
+    UserResponseDto userCreateEmployee(UserRequestDto userRequestDto);
 }
