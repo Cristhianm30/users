@@ -65,6 +65,28 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+def coverageExcludes = [
+		'**/dto/.*',
+		'**/spi/.**',
+		'**/api/.*',
+		'**/mappers/.*',
+		'**/repository/.*',
+		'**/*.test',
+		'**/generated/.*',
+]
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+		html.required = true
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: coverageExcludes)
+		}))
+	}
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

@@ -37,13 +37,13 @@ public class RoleUseCaseTest {
 
     @Test
     void testGetOwnerRoleSuccessfully() {
-        // Simulamos que se encuentra el rol "PROPIETARIO"
+
         when(rolePersistencePort.findByName("PROPIETARIO")).thenReturn(Optional.of(ownerRole));
 
-        // Ejecutamos el método
+
         Role result = roleUseCase.getOwnerRole();
 
-        // Verificamos la interacción y resultado
+
         verify(rolePersistencePort, times(1)).findByName("PROPIETARIO");
         assertNotNull(result);
         assertEquals("PROPIETARIO", result.getName());
@@ -70,10 +70,10 @@ public class RoleUseCaseTest {
 
     @Test
     void testGetOwnerRoleThrowsExceptionWhenNotFound() {
-        // Simulamos que no se encuentra el rol "PROPIETARIO"
+
         when(rolePersistencePort.findByName("PROPIETARIO")).thenReturn(Optional.empty());
 
-        // Verificamos que se lance la excepción correspondiente
+
         assertThrows(RoleNotFoundException.class, () -> roleUseCase.getOwnerRole());
         verify(rolePersistencePort, times(1)).findByName("PROPIETARIO");
     }

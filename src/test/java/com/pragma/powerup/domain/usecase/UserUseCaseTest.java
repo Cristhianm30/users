@@ -47,32 +47,32 @@ class UserUseCaseTest {
         ownerRole = new Role(1L, "PROPIETARIO");
         employeeRole = new Role(2L, "EMPLEADO");
         clientRole = new Role(3L, "CLIENTE");
-        // Se crea un usuario de ejemplo; el rol se asignará en el use case.
+
         dummyUser = new User(null, null, "plainPassword", LocalDate.of(1990, 1, 1),
                 "+123456789", "1234567890", "Doe", "John", "john.doe@example.com");
     }
 
     @Test
     void testCreateOwnerSuccessfully() {
-        // Simula que la validación se ejecuta sin errores
+
         doNothing().when(userValidations).validateOwner(dummyUser);
-        // Stub: obtener rol propietario
+
         when(roleServicePort.getOwnerRole()).thenReturn(ownerRole);
-        // Stub: encriptar contraseña, se espera que se pase "plainPassword"
+
         when(passwordEncoder.encode(dummyUser.getPassword())).thenReturn("encodedPassword");
-        // Stub: guardar usuario y retornar usuario guardado con id asignado
+
         User savedUser = new User(1L, ownerRole, "encodedPassword", dummyUser.getBirthDate(),
                 dummyUser.getCellPhone(), dummyUser.getDocumentNumber(),
                 dummyUser.getLastName(), dummyUser.getName(), dummyUser.getEmail());
         when(userPersistencePort.save(dummyUser)).thenReturn(savedUser);
 
-        // Ejecutar el caso de uso
+
         User result = userUseCase.createOwner(dummyUser);
 
-        // Verificar interacciones y resultado
+
         verify(userValidations, times(1)).validateOwner(dummyUser);
         verify(roleServicePort, times(1)).getOwnerRole();
-        // Verificamos que se invoque encode con el valor original "plainPassword"
+
         verify(passwordEncoder, times(1)).encode("plainPassword");
         verify(userPersistencePort, times(1)).save(dummyUser);
 
@@ -131,13 +131,13 @@ class UserUseCaseTest {
 
     @Test
     void testGetUserById() {
-        // Preparamos un usuario simulado
+
         User user = new User(1L, ownerRole, "encodedPassword", dummyUser.getBirthDate(),
                 dummyUser.getCellPhone(), dummyUser.getDocumentNumber(),
                 dummyUser.getLastName(), dummyUser.getName(), dummyUser.getEmail());
         when(userPersistencePort.findById(1L)).thenReturn(user);
 
-        // Ejecutamos el método y verificamos
+
         User result = userUseCase.getUserById(1L);
         verify(userPersistencePort, times(1)).findById(1L);
         assertNotNull(result);
@@ -146,13 +146,13 @@ class UserUseCaseTest {
 
     @Test
     void testGetUserByEmail() {
-        // Preparamos un usuario simulado
+
         User user = new User(1L, ownerRole, "encodedPassword", dummyUser.getBirthDate(),
                 dummyUser.getCellPhone(), dummyUser.getDocumentNumber(),
                 dummyUser.getLastName(), dummyUser.getName(), dummyUser.getEmail());
         when(userPersistencePort.getUserByEmail("john.doe@example.com")).thenReturn(user);
 
-        // Ejecutamos el método y verificamos
+
         User result = userUseCase.getUserByEmail("john.doe@example.com");
         verify(userPersistencePort, times(1)).getUserByEmail("john.doe@example.com");
         assertNotNull(result);

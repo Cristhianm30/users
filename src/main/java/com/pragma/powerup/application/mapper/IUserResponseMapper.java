@@ -12,7 +12,7 @@ import org.mapstruct.ReportingPolicy;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface IUserResponseMapper {
 
-    User responseToUser(UserResponseDto userResponseDto);
+
     UserResponseDto userToResponse(User user);
     RoleDto roletoDto (Role role);
 
